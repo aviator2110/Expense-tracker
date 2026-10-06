@@ -16,16 +16,78 @@
         </header>
 
         <dl>
-            <dt>Total Spent</dt>
-            <dd><mark>{{ total_amount }} ₼</mark></dd>
-            <dt>Total Records</dt>
+            <dt>Total Spent{% if has_filters %} (Filtered){% endif %}</dt>
+            <dd><mark>{{ total_amount|floatformat:2 }} ₼</mark></dd>
+            <dt>Records Found</dt>
             <dd><strong>{{ total_count }}</strong></dd>
         </dl>
+
+        <form method="GET" action="{% url 'home' %}" id="filter-form">
+            <fieldset>
+                <legend>Filter & Search Ledger</legend>
+
+                <p>
+                    <label for="id_search">Search Expense</label>
+                    <input type="search"
+                           name="q"
+                           id="id_search"
+                           value="{{ q }}"
+                           placeholder="Search by title...">
+                </p>
+
+                <p>
+                    <label for="id_category">Category</label>
+                    <select name="category" id="id_category">
+                        <option value="">All Categories</option>
+                        {% for cat in categories %}
+                            <option value="{{ cat.id }}" {% if selected_category == cat.id|stringformat:"s" %}selected{% endif %}>
+                                {{ cat.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </p>
+
+                <p>
+                    <label for="id_payment_type">Payment Method</label>
+                    <select name="payment_type" id="id_payment_type">
+                        <option value="">All Payment Types</option>
+                        {% for pt in payment_types %}
+                            <option value="{{ pt.id }}" {% if selected_payment_type == pt.id|stringformat:"s" %}selected{% endif %}>
+                                {{ pt.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </p>
+
+                <p>
+                    <label for="id_start_date">From Date</label>
+                    <input type="date"
+                           name="start_date"
+                           id="id_start_date"
+                           value="{{ start_date }}">
+                </p>
+
+                <p>
+                    <label for="id_end_date">To Date</label>
+                    <input type="date"
+                           name="end_date"
+                           id="id_end_date"
+                           value="{{ end_date }}">
+                </p>
+
+                <div>
+                    <button type="submit" id="btn-apply-filters">Filter Ledger 🔍</button>
+                    {% if has_filters %}
+                        <a href="{% url 'home' %}" role="button" id="btn-reset-filters">✕ Reset Filters</a>
+                    {% endif %}
+                </div>
+            </fieldset>
+        </form>
     </section>
 
     {% if expenses %}
         <table>
-            <caption>Your Recent Expenses</caption>
+            <caption>{% if has_filters %}Filtered Ledger Results ({{ total_count }}){% else %}Your Recent Expenses{% endif %}</caption>
             <thead>
                 <tr>
                     <th>Expense Title</th>
@@ -47,7 +109,7 @@
                         <td>{{ expense.category.name }}</td>
                         <td>{{ expense.payment_type.name }}</td>
                         <td>{{ expense.date|date:"M d, Y" }}</td>
-                        <td><mark>{{ expense.amount }} ₼</mark></td>
+                        <td><mark>{{ expense.amount|floatformat:2 }} ₼</mark></td>
                         <td>
                             <a href="{% url 'expense_detail' expense.id %}">View Details →</a>
                         </td>
@@ -58,11 +120,15 @@
     {% else %}
         <article>
             <header>
-                <h2>No Expenses Recorded Yet</h2>
-                <p>You haven't logged any expense transactions yet. Start tracking your budget!</p>
+                <h2>{% if has_filters %}No Matching Expenses Found{% else %}No Expenses Recorded Yet{% endif %}</h2>
+                <p>{% if has_filters %}No transactions match your current search/filter criteria. Try clearing some filters.{% else %}You haven't logged any expense transactions yet. Start tracking your budget!{% endif %}</p>
             </header>
             <footer>
-                <a href="{% url 'add_expense' %}" role="button" id="btn-empty-add-expense">+ Record Your First Expense</a>
+                {% if has_filters %}
+                    <a href="{% url 'home' %}" role="button" id="btn-empty-reset-filters">✕ Reset Filters</a>
+                {% else %}
+                    <a href="{% url 'add_expense' %}" role="button" id="btn-empty-add-expense">+ Record Your First Expense</a>
+                {% endif %}
             </footer>
         </article>
     {% endif %}
