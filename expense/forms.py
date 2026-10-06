@@ -1,4 +1,4 @@
-from datetime import timezone
+from django.utils import timezone
 from django import forms
 from .models import Expense
 
@@ -26,7 +26,7 @@ class ExpenseForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        name = cleaned_data.get('name').strip()
+        name = (cleaned_data.get('name') or '').strip()
         amount = cleaned_data.get('amount')
         date = cleaned_data.get('date')
         if len(name) < 3:

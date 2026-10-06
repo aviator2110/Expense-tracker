@@ -1,16 +1,94 @@
 {% extends 'base.html' %}
 
+{% block title %}Home | Expense Tracker{% endblock %}
+
 {% block content %}
+{% if request.user.is_authenticated %}
+    <section>
+        <header>
+            <div>
+                <h1>Expenses Dashboard</h1>
+                <p>Welcome back, <strong>{{ request.user.username }}</strong>! Here is an overview of your spending.</p>
+            </div>
+        </header>
+
+        <dl>
+            <dt>Total Spent</dt>
+            <dd><mark>{{ total_amount }} ₼</mark></dd>
+            <dt>Total Records</dt>
+            <dd><strong>{{ total_count }}</strong></dd>
+        </dl>
+    </section>
 
     {% if expenses %}
-    	{% for expense in expenses %}
-    		<h1>{{ expense.name }}</h1>
-            <span>Category: {{ expense.category }}</span>
-            <span>Payment type: {{ expense.payment_type }}</span>
-            <span>Amount: {{ expense.amount }} ₼</span>
-        {% endfor %}
+        <table>
+            <caption>Your Recent Expenses</caption>
+            <thead>
+                <tr>
+                    <th>Expense Title</th>
+                    <th>Category</th>
+                    <th>Payment Method</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'expense_detail' expense.id %}">
+                                <strong>{{ expense.name }}</strong>
+                            </a>
+                        </td>
+                        <td>{{ expense.category.name }}</td>
+                        <td>{{ expense.payment_type.name }}</td>
+                        <td>{{ expense.date|date:"M d, Y" }}</td>
+                        <td><mark>{{ expense.amount }} ₼</mark></td>
+                        <td>
+                            <a href="{% url 'expense_detail' expense.id %}">View Details →</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
-        <h1>No expenses yet!</h1>
+        <article>
+            <header>
+                <h2>No Expenses Recorded Yet</h2>
+                <p>You haven't logged any expense transactions yet. Start tracking your budget!</p>
+            </header>
+        </article>
     {% endif %}
 
+{% else %}
+    <article>
+        <header>
+            <h1>Personal Expense Tracker</h1>
+            <p>Smart and effortless personal budget management</p>
+        </header>
+
+        <blockquote>
+            Please log in or create an account to start tracking and analyzing your personal expenses.
+        </blockquote>
+
+        <p>
+            With Expense Tracker, you can:
+        </p>
+        <ul>
+            <li>Record daily expenditures with custom amounts and dates</li>
+            <li>Organize spending by categories and payment methods</li>
+            <li>Keep full control over your finances with private, isolated records</li>
+        </ul>
+
+        <footer>
+            <p>
+                <a href="{% url 'login' %}" role="button" id="btn-hero-login">Log In to Your Account →</a>
+            </p>
+            <p>
+                Don't have an account yet? <a href="{% url 'register' %}" id="link-hero-register">Sign Up for free</a>
+            </p>
+        </footer>
+    </article>
+{% endif %}
 {% endblock %}

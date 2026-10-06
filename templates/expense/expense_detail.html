@@ -1,14 +1,56 @@
 {% extends 'base.html' %}
 
+{% block title %}{% if expense %}{{ expense.name }} | Expense Details{% else %}Expense Not Found{% endif %}{% endblock %}
+
 {% block content %}
+{% if expense %}
+    <p><a href="{% url 'home' %}">← Back to Expenses Dashboard</a></p>
 
-    {% if expense %}
-    	<h1>{{ expense.name }}</h1>
-        <span>Category: {{ expense.category }}</span>
-        <span>Payment type: {{ expense.payment_type }}</span>
-        <span>Amount: {{ expense.amount }} ₼</span>
-    {% else %}
-        <h1>Wrong expense ID</h1>
-    {% endif %}
+    <article>
+        <header>
+            <h1>{{ expense.name }}</h1>
+            <p>Expense record created on {{ expense.created_at|date:"F d, Y" }}</p>
+        </header>
 
+        <p>
+            Amount: <mark>{{ expense.amount }} ₼</mark>
+        </p>
+
+        <dl>
+            <dt>Category</dt>
+            <dd>{{ expense.category.name }}</dd>
+
+            <dt>Payment Method</dt>
+            <dd>{{ expense.payment_type.name }}</dd>
+
+            <dt>Expense Date</dt>
+            <dd>{{ expense.date|date:"F d, Y" }}</dd>
+
+            <dt>Created By</dt>
+            <dd>{{ expense.author.username }}</dd>
+
+            <dt>Last Updated</dt>
+            <dd>{{ expense.updated_at|date:"M d, Y H:i" }}</dd>
+        </dl>
+
+        {% if expense.note %}
+            <h3>Note & Details</h3>
+            <blockquote>
+                {{ expense.note|linebreaksbr }}
+            </blockquote>
+        {% endif %}
+
+        <footer>
+            <p><a href="{% url 'home' %}">← Return to Dashboard</a></p>
+        </footer>
+    </article>
+{% else %}
+    <article>
+        <header>
+            <h1>Expense Not Found</h1>
+            <p>The requested expense record does not exist or could not be found.</p>
+        </header>
+        <p><a href="{% url 'home' %}">← Return to Dashboard</a></p>
+    </article>
+{% endif %}
 {% endblock %}

@@ -1,0 +1,764 @@
+/* ==========================================================================
+   CLASSLESS EDITORIAL FINANCIAL LEDGER - EXPENSE TRACKER
+   Distinctive, high-craft print & paper aesthetic.
+   Zero utility classes required. Pure HTML elements styled out of the box.
+   ========================================================================== */
+
+:root {
+    --bg-canvas: #f6f3eb;
+    --bg-card: #ffffff;
+    --bg-card-alt: #f0ebe1;
+    --ink: #1c1917;
+    --ink-muted: #57534e;
+    --ink-faint: #a8a29e;
+    --border-ink: #1c1917;
+    --accent-green: #15803d;
+    --accent-green-bg: #dcfce7;
+    --accent-green-border: #86efac;
+    --accent-ochre: #b45309;
+    --accent-ochre-bg: #fef3c7;
+    --accent-red: #b91c1c;
+    --accent-red-bg: #fee2e2;
+    --shadow-brutal: 4px 4px 0px #1c1917;
+    --shadow-brutal-sm: 2.5px 2.5px 0px #1c1917;
+    --shadow-brutal-lg: 6px 6px 0px #1c1917;
+    --font-serif: 'Newsreader', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    color-scheme: light;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-canvas);
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+    /* Subtle tactile graph paper / architectural dot grid pattern */
+    background-image: radial-gradient(#d5cebe 1.2px, transparent 1.2px);
+    background-size: 22px 22px;
+}
+
+/* ==========================================================================
+   HEADER & NAVIGATION
+   ========================================================================== */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #ffffff;
+    border-bottom: 2.5px solid var(--border-ink);
+    box-shadow: 0 4px 0 rgba(28, 25, 23, 0.05);
+}
+
+header nav {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+header nav a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: all 0.15s ease;
+}
+
+header nav a:hover {
+    color: var(--accent-green);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+}
+
+/* First link in header nav = Brand Title */
+header nav a:first-child {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 800;
+    font-style: italic;
+    color: var(--ink);
+    text-transform: none;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+
+header nav a:first-child:hover {
+    text-decoration: none;
+    color: var(--ink);
+    transform: translateY(-1px);
+}
+
+header nav a:first-child strong {
+    font-style: normal;
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    background: var(--ink);
+    color: #ffffff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-left: 4px;
+    border: 1px solid var(--border-ink);
+}
+
+/* Nav groups for right-side items */
+header nav div,
+header nav ul {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    list-style: none;
+}
+
+/* Action button links in nav */
+header nav a[href*="register"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-decoration: none;
+    background: var(--accent-green);
+    color: #ffffff;
+    border: 2px solid var(--border-ink);
+    box-shadow: var(--shadow-brutal-sm);
+    transition: all 0.15s ease;
+}
+
+header nav a[href*="register"]:hover {
+    transform: translate(-1.5px, -1.5px);
+    box-shadow: 4px 4px 0px var(--border-ink);
+    background: #166534;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+header nav a[href*="logout"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.15rem;
+    border-radius: 6px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-decoration: none;
+    background: #ffffff;
+    border: 2px solid var(--border-ink);
+    box-shadow: var(--shadow-brutal-sm);
+    color: var(--ink);
+    transition: all 0.15s ease;
+}
+
+header nav a[href*="logout"]:hover {
+    transform: translate(-1.5px, -1.5px);
+    box-shadow: 4px 4px 0px var(--border-ink);
+    background: #fee2e2;
+    color: var(--accent-red);
+    text-decoration: none;
+}
+
+/* User greeting in nav */
+header nav span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent-ochre-bg);
+    border: 2px solid var(--border-ink);
+    padding: 0.4rem 0.85rem;
+    border-radius: 6px;
+    box-shadow: var(--shadow-brutal-sm);
+    font-family: var(--font-mono);
+    font-size: 0.825rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+/* ==========================================================================
+   MAIN CONTENT & CARDS (ARTICLE / SECTION)
+   ========================================================================== */
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2.5rem 1.5rem;
+}
+
+article,
+section {
+    background: var(--bg-card);
+    border: 2.5px solid var(--border-ink);
+    border-top: 6px solid var(--border-ink);
+    border-radius: 10px;
+    box-shadow: var(--shadow-brutal);
+    padding: 2.25rem;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+    animation: stampIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes stampIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Constrain centered single cards (auth pages, details) */
+main > article:only-child,
+main > article {
+    max-width: 500px;
+    margin: 1.5rem auto;
+}
+
+/* Full width on dashboard sections */
+main > section {
+    max-width: 100%;
+    margin: 1.5rem 0;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY
+   ========================================================================== */
+h1 {
+    font-family: var(--font-serif);
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+}
+
+h2 {
+    font-family: var(--font-serif);
+    font-size: 1.65rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+}
+
+h3 {
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    margin-bottom: 0.5rem;
+}
+
+h1 + p,
+h2 + p {
+    color: var(--ink-muted);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: var(--ink);
+}
+
+strong, b {
+    color: var(--ink);
+    font-weight: 800;
+}
+
+small {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+}
+
+a {
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    transition: color 0.15s ease;
+}
+
+a:hover {
+    color: var(--accent-green);
+}
+
+/* Lists inside articles */
+article ul {
+    margin: 1rem 0 1.5rem 1.5rem;
+    color: var(--ink);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+article ul li {
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+/* Article footer call-to-actions */
+article footer {
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 2px dashed #d6cfc0;
+    background: none;
+    box-shadow: none;
+    border-bottom: none;
+    text-align: center;
+}
+
+article footer a[role="button"] {
+    margin-bottom: 0.85rem;
+    background: var(--accent-green);
+    color: #ffffff;
+    border: 2px solid var(--border-ink);
+    box-shadow: var(--shadow-brutal);
+    text-decoration: none;
+}
+
+article footer a[role="button"]:hover {
+    background: #166534;
+    color: #ffffff;
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal-lg);
+    text-decoration: none;
+}
+
+/* ==========================================================================
+   FORMS & INPUTS
+   ========================================================================== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+}
+
+form p,
+form div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 0;
+}
+
+label,
+form label {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 0.785rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink);
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: #ffffff;
+    border: 2px solid var(--border-ink);
+    border-radius: 6px;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    outline: none;
+    box-shadow: 2px 2px 0px rgba(28, 25, 23, 0.1);
+    transition: all 0.15s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--ink-faint);
+    font-size: 0.9rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--border-ink);
+    background: #fefce8;
+    box-shadow: 3px 3px 0px var(--border-ink);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* Buttons */
+button,
+input[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.9rem 1.5rem;
+    background: var(--ink);
+    color: #ffffff;
+    font-family: var(--font-sans);
+    font-size: 0.925rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border: 2.5px solid var(--border-ink);
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: var(--shadow-brutal);
+    transition: all 0.15s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal-lg);
+    background: var(--accent-green);
+    border-color: var(--border-ink);
+}
+
+button:active,
+input[type="submit"]:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1.5px 1.5px 0px var(--border-ink);
+}
+
+/* Secondary / cancel actions inside forms */
+form a,
+a[role="button"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.5rem;
+    border: 2px solid var(--border-ink);
+    border-radius: 6px;
+    background: #ffffff;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: var(--shadow-brutal-sm);
+    transition: all 0.15s ease;
+}
+
+form a:hover,
+a[role="button"]:hover {
+    background: #f0ebe1;
+    transform: translate(-1.5px, -1.5px);
+    box-shadow: 4px 4px 0px var(--border-ink);
+    text-decoration: none;
+    color: var(--ink);
+}
+
+/* Red / Danger actions (e.g. logout confirmation) */
+form[action*="logout"] button {
+    background: var(--accent-red);
+    color: #ffffff;
+    border: 2.5px solid var(--border-ink);
+    box-shadow: var(--shadow-brutal);
+}
+
+form[action*="logout"] button:hover {
+    background: #991b1b;
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal-lg);
+}
+
+/* Form error lists */
+ul.errorlist,
+form ul {
+    list-style: none;
+    margin: 0.35rem 0 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+ul.errorlist li,
+form ul li {
+    color: var(--accent-red);
+    font-family: var(--font-sans);
+    font-size: 0.825rem;
+    font-weight: 700;
+}
+
+/* Non-field errors box */
+ul.errorlist.nonfield,
+form > ul:first-of-type {
+    background: var(--accent-red-bg);
+    border: 2px solid var(--accent-red);
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    box-shadow: var(--shadow-brutal-sm);
+    margin-bottom: 0.75rem;
+}
+
+/* ==========================================================================
+   STAT SUMMARY (SECTION WITH DL)
+   ========================================================================== */
+section header {
+    position: static;
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+dl {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    background: var(--bg-card-alt);
+    border: 2.5px solid var(--border-ink);
+    border-radius: 8px;
+    box-shadow: var(--shadow-brutal);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+dt {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+}
+
+dd {
+    margin: 0;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-right: 2rem;
+}
+
+/* Specific layout on Detail Page */
+article dl {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1rem 1.5rem;
+    background: #faf7f2;
+    border: 2px solid var(--border-ink);
+    box-shadow: var(--shadow-brutal-sm);
+    border-radius: 6px;
+    padding: 1.25rem;
+}
+
+article dl dt {
+    color: var(--ink-muted);
+}
+
+article dl dd {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-right: 0;
+}
+
+/* ==========================================================================
+   TABLES (FINANCIAL LEDGER)
+   ========================================================================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: #ffffff;
+    border: 2.5px solid var(--border-ink);
+    border-radius: 8px;
+    box-shadow: var(--shadow-brutal);
+    overflow: hidden;
+}
+
+caption {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: left;
+    padding: 1rem 0;
+    caption-side: top;
+}
+
+th {
+    padding: 0.95rem 1.15rem;
+    text-align: left;
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    background: #f0ebe1;
+    border-bottom: 2.5px solid var(--border-ink);
+}
+
+td {
+    padding: 1rem 1.15rem;
+    border-bottom: 1px solid #e7e0d3;
+    color: var(--ink);
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+    background: #faf7f2;
+}
+
+tbody tr:hover {
+    background-color: #fefce8;
+}
+
+td a {
+    font-weight: 700;
+    color: var(--ink);
+}
+
+/* Currency and Amounts: Ledger Stamp badge */
+mark {
+    background: var(--accent-green-bg);
+    color: var(--accent-green);
+    border: 1.5px solid var(--accent-green-border);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* ==========================================================================
+   MEMO NOTICES (BLOCKQUOTE & ASIDE)
+   ========================================================================== */
+blockquote {
+    border: 2px solid var(--border-ink);
+    border-left: 6px solid var(--border-ink);
+    background: #f0ebe1;
+    box-shadow: var(--shadow-brutal-sm);
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    border-radius: 6px;
+    color: var(--ink);
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.05rem;
+}
+
+/* System Alerts: Memo telegram slip */
+aside {
+    padding: 0.95rem 1.25rem;
+    margin-bottom: 1.75rem;
+    border-radius: 6px;
+    background: #fef08a;
+    border: 2.5px solid var(--border-ink);
+    box-shadow: var(--shadow-brutal-sm);
+    color: #713f12;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: stampIn 0.25s ease;
+}
+
+aside p {
+    margin: 0;
+    color: inherit;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+footer {
+    border-top: 2.5px solid var(--border-ink);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    color: var(--ink-muted);
+    font-family: var(--font-sans);
+    font-size: 0.825rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: auto;
+    background: #ffffff;
+}
+
+footer p {
+    margin: 0;
+    color: var(--ink-muted);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+    header nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    header nav div,
+    header nav ul {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    article dl {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    article,
+    section {
+        padding: 1.5rem;
+        box-shadow: var(--shadow-brutal-sm);
+    }
+}

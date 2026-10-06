@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirm Log Out | Expense Tracker{% endblock %}
+
+{% block content %}
+<article>
+    <header>
+        <h1>Confirm Log Out</h1>
+        <p>Are you sure you want to log out of <strong>{{ request.user.username|default:"your account" }}</strong>?</p>
+    </header>
+
+    <blockquote>
+        Your recorded expenses and data remain securely stored and will be available whenever you log back in.
+    </blockquote>
+
+    <form method="POST" action="{% url 'logout' %}" id="logout-form">
+        {% csrf_token %}
+        <button type="submit" id="btn-confirm-logout">Yes, Log Out →</button>
+        <a href="{% url 'home' %}" role="button" id="btn-cancel-logout">← Cancel, Stay Logged In</a>
+    </form>
+</article>
+{% endblock %}

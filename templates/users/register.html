@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up | Expense Tracker{% endblock %}
+
+{% block content %}
+<article>
+    <header>
+        <h1>Create Account</h1>
+        <p>Start tracking your expenses and take control of your budget</p>
+    </header>
+
+    <form method="POST" action="{% url 'register' %}" id="register-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" id="btn-register-submit">Register Account ✓</button>
+    </form>
+
+    <footer>
+        <p>Already have an account? <a href="{% url 'login' %}" id="link-to-login">Log In</a></p>
+    </footer>
+</article>
+{% endblock %}
