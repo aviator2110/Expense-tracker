@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, render, get_object_or_404
@@ -53,6 +54,7 @@ def home(request):
     return render(request, 'expense/home.html', context)
 
 
+@login_required
 def expense_detail(request, expense_id):
     if not request.user.is_authenticated:
         expense = None
@@ -61,6 +63,7 @@ def expense_detail(request, expense_id):
     return render(request, 'expense/expense_detail.html', {'expense': expense})
 
 
+@login_required
 def add_expense(request):
     if not request.user.is_authenticated:
         messages.info(request, 'Please log in to record an expense.')
@@ -79,6 +82,7 @@ def add_expense(request):
     return render(request, 'expense/add_expense.html', {'form': form})
 
 
+@login_required
 def delete_expense(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)
     if expense.author != request.user:
@@ -91,6 +95,7 @@ def delete_expense(request, expense_id):
     return render(request, 'expense/delete_expense.html', {'expense': expense})
 
 
+@login_required
 def update_expense(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)
     if expense.author != request.user:
