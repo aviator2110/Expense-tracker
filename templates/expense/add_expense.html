@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Record Expense | Expense Tracker{% endblock %}
+
+{% block content %}
+<p><a href="{% url 'home' %}">← Back to Expenses Dashboard</a></p>
+
+<article>
+    <header>
+        <h1>Record New Expense</h1>
+        <p>Enter transaction details to log a new ledger entry</p>
+    </header>
+
+    <form method="POST" action="{% url 'add_expense' %}" id="add-expense-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" id="btn-save-expense">Save Expense Entry ✓</button>
+        <a href="{% url 'home' %}" role="button" id="btn-cancel-add">Cancel</a>
+    </form>
+
+    <footer>
+        <p><a href="{% url 'home' %}">← Return to Dashboard</a></p>
+    </footer>
+</article>
+{% endblock %}

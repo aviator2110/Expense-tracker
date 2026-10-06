@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit {{ form.instance.name }} | Expense Tracker{% endblock %}
+
+{% block content %}
+<p><a href="{% url 'expense_detail' form.instance.id %}">← Back to Expense Details</a></p>
+
+<article>
+    <header>
+        <h1>Edit Expense Entry</h1>
+        <p>Modify transaction details for <strong>{{ form.instance.name }}</strong></p>
+    </header>
+
+    <form method="POST" action="{% url 'update_expense' form.instance.id %}" id="update-expense-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" id="btn-save-update">Save Changes ✓</button>
+        <a href="{% url 'expense_detail' form.instance.id %}" role="button" id="btn-cancel-update">Cancel</a>
+    </form>
+
+    <footer>
+        <p><a href="{% url 'home' %}">← Return to Dashboard</a></p>
+    </footer>
+</article>
+{% endblock %}

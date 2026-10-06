@@ -41,6 +41,10 @@
         {% endif %}
 
         <footer>
+            <div>
+                <a href="{% url 'update_expense' expense.id %}" role="button" id="btn-edit-expense">✎ Edit Expense</a>
+                <a href="{% url 'delete_expense' expense.id %}" role="button" id="btn-delete-expense">✕ Delete Expense</a>
+            </div>
             <p><a href="{% url 'home' %}">← Return to Dashboard</a></p>
         </footer>
     </article>

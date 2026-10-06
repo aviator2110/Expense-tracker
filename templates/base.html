@@ -31,6 +31,29 @@
         <p>© {% now "Y" %} Expense Tracker • All rights reserved</p>
     </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const systemMessages = document.getElementById('system-messages');
+            if (systemMessages) {
+                // Auto-fade after 5 seconds
+                const timer = setTimeout(() => {
+                    systemMessages.style.opacity = '0';
+                    systemMessages.style.transform = 'translateY(-10px)';
+                    setTimeout(() => systemMessages.remove(), 600);
+                }, 5000);
+
+                // Click to dismiss immediately
+                systemMessages.title = 'Click to dismiss';
+                systemMessages.addEventListener('click', () => {
+                    clearTimeout(timer);
+                    systemMessages.style.opacity = '0';
+                    systemMessages.style.transform = 'translateY(-10px)';
+                    setTimeout(() => systemMessages.remove(), 300);
+                });
+            }
+        });
+    </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>

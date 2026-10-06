@@ -480,18 +480,47 @@ a[role="button"]:hover {
     color: var(--ink);
 }
 
-/* Red / Danger actions (e.g. logout confirmation) */
-form[action*="logout"] button {
+/* Red / Danger actions (e.g. logout & delete confirmations) */
+form[action*="logout"] button,
+form[action*="delete"] button,
+a[href*="delete"][role="button"] {
     background: var(--accent-red);
     color: #ffffff;
     border: 2.5px solid var(--border-ink);
     box-shadow: var(--shadow-brutal);
 }
 
-form[action*="logout"] button:hover {
+form[action*="logout"] button:hover,
+form[action*="delete"] button:hover,
+a[href*="delete"][role="button"]:hover {
     background: #991b1b;
+    color: #ffffff;
     transform: translate(-2px, -2px);
     box-shadow: var(--shadow-brutal-lg);
+    text-decoration: none;
+}
+
+/* Header Action Buttons (e.g. + Record Expense) */
+section header a[role="button"] {
+    background: var(--accent-green);
+    color: #ffffff;
+    border: 2.5px solid var(--border-ink);
+    box-shadow: var(--shadow-brutal);
+    padding: 0.75rem 1.35rem;
+    font-weight: 800;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+section header a[role="button"]:hover {
+    background: #166534;
+    color: #ffffff;
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-brutal-lg);
+    text-decoration: none;
 }
 
 /* Form error lists */
@@ -700,6 +729,8 @@ aside {
     flex-direction: column;
     gap: 0.5rem;
     animation: stampIn 0.25s ease;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    cursor: pointer;
 }
 
 aside p {

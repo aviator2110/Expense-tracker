@@ -10,6 +10,9 @@
                 <h1>Expenses Dashboard</h1>
                 <p>Welcome back, <strong>{{ request.user.username }}</strong>! Here is an overview of your spending.</p>
             </div>
+            <div>
+                <a href="{% url 'add_expense' %}" role="button" id="btn-create-expense">+ Record Expense</a>
+            </div>
         </header>
 
         <dl>
@@ -58,6 +61,9 @@
                 <h2>No Expenses Recorded Yet</h2>
                 <p>You haven't logged any expense transactions yet. Start tracking your budget!</p>
             </header>
+            <footer>
+                <a href="{% url 'add_expense' %}" role="button" id="btn-empty-add-expense">+ Record Your First Expense</a>
+            </footer>
         </article>
     {% endif %}
 
