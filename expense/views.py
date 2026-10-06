@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseForbidden
 from django.shortcuts import redirect, render, get_object_or_404
 from expense.forms import ExpenseForm
 from django.db.models import Sum
@@ -86,11 +85,12 @@ def add_expense(request):
 def delete_expense(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)
     if expense.author != request.user:
-        return HttpResponseForbidden('You are not authorized to delete this expense')
+        messages.error(request, 'You are not authorized to delete this expense.')
+        return redirect('home')
 
     if request.method == 'POST':
         expense.delete()
-        messages.success(request,'Expense deleted successfully.')
+        messages.success(request, 'Expense deleted successfully.')
         return redirect('home')
     return render(request, 'expense/delete_expense.html', {'expense': expense})
 
@@ -99,13 +99,14 @@ def delete_expense(request, expense_id):
 def update_expense(request, expense_id):
     expense = get_object_or_404(Expense, pk=expense_id)
     if expense.author != request.user:
-        return HttpResponseForbidden('You are not authorized to update this expense')
+        messages.error(request, 'You are not authorized to edit this expense.')
+        return redirect('home')
 
     if request.method == 'POST':
         form = ExpenseForm(request.POST, instance=expense)
         if form.is_valid():
             form.save()
-            messages.success(request,'Expense updated successfully.')
+            messages.success(request, 'Expense updated successfully.')
             return redirect('home')
     else:
         form = ExpenseForm(instance=expense)
